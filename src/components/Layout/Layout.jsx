@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-primary-500 text-white shadow-md">
+      <header className="bg-secondary-500 text-white shadow-md">
         <div className="container mx-auto py-2">
           <img
             src="/images/kaaba.jpg"
