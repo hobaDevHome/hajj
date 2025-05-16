@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaCheck, FaEllipsisV, FaPray, FaTrash } from 'react-icons/fa';
-import { usePeople } from '../../contexts/PeopleContext';
-import Card from '../UI/Card';
-import Button from '../UI/Button';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaCheck, FaEllipsisV, FaPray, FaTrash } from "react-icons/fa";
+import { usePeople } from "../../contexts/PeopleContext";
+import Card from "../UI/Card";
+import Button from "../UI/Button";
 
 const DuaaItem = ({ duaa, personId }) => {
   const { toggleDuaa, removeDuaa } = usePeople();
@@ -14,7 +14,7 @@ const DuaaItem = ({ duaa, personId }) => {
     try {
       await toggleDuaa(personId, duaa.id, !duaa.is_done);
     } catch (error) {
-      console.error('Error toggling duaa:', error);
+      console.error("Error toggling duaa:", error);
     }
   };
 
@@ -23,7 +23,7 @@ const DuaaItem = ({ duaa, personId }) => {
       setIsDeleting(true);
       await removeDuaa(personId, duaa.id);
     } catch (error) {
-      console.error('Error deleting duaa:', error);
+      console.error("Error deleting duaa:", error);
       setIsDeleting(false);
     }
   };
@@ -36,9 +36,7 @@ const DuaaItem = ({ duaa, personId }) => {
       exit={{ opacity: 0, height: 0, marginTop: 0 }}
       transition={{ duration: 0.3 }}
       className={`relative border rounded-lg p-3 transition-colors ${
-        duaa.is_done
-          ? 'bg-gray-50 border-gray-200'
-          : 'bg-white border-gray-200'
+        duaa.is_done ? "bg-gray-50 border-gray-200" : "bg-white border-gray-200"
       }`}
     >
       <div className="flex items-start gap-3">
@@ -46,8 +44,8 @@ const DuaaItem = ({ duaa, personId }) => {
           onClick={handleToggle}
           className={`flex-shrink-0 w-5 h-5 rounded border mt-0.5 flex items-center justify-center transition-colors ${
             duaa.is_done
-              ? 'bg-success-500 border-success-500 text-white'
-              : 'border-gray-300 hover:border-primary-500'
+              ? "bg-success-500 border-success-500 text-white"
+              : "border-gray-300 hover:border-primary-500"
           }`}
         >
           {duaa.is_done && <FaCheck size={10} />}
@@ -56,7 +54,7 @@ const DuaaItem = ({ duaa, personId }) => {
         <div className="flex-grow">
           <p
             className={`text-gray-800 break-words ${
-              duaa.is_done ? 'line-through text-gray-500' : ''
+              duaa.is_done ? "line-through text-gray-500" : ""
             }`}
           >
             {duaa.text}
@@ -86,7 +84,7 @@ const DuaaItem = ({ duaa, personId }) => {
             disabled={isDeleting}
             className="flex items-center gap-1"
           >
-            <FaTrash size={12} /> Delete
+            <FaTrash size={12} /> حذف
           </Button>
         </motion.div>
       )}

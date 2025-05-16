@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col ">
       <header className="bg-secondary-500 text-white shadow-md">
         <div className="container mx-auto py-2">
           <img
