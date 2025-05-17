@@ -39,7 +39,7 @@ const DuaaItem = ({ duaa, personId }) => {
         duaa.is_done ? "bg-gray-50 border-gray-200" : "bg-white border-gray-200"
       }`}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3" onClick={handleToggle}>
         <button
           onClick={handleToggle}
           className={`flex-shrink-0 w-3 h-3 rounded border mt-0.5 flex items-center justify-center transition-colors ${
