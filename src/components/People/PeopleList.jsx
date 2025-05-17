@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaPlus, FaUsers } from "react-icons/fa";
+import { FaPlus, FaUndo, FaUsers } from "react-icons/fa";
 import { usePeople } from "../../contexts/PeopleContext";
 import Button from "../UI/Button";
 import Spinner from "../UI/Spinner";
@@ -8,9 +8,11 @@ import EmptyState from "../UI/EmptyState";
 import AddPersonModal from "./AddPersonModal";
 import DeletePersonModal from "./DeletePersonModal";
 import PersonCard from "./PersonCard";
+import { toast } from "react-toastify";
+import { supabase } from "../../lib/supabase";
 
 const PeopleList = () => {
-  const { people, loading } = usePeople();
+  const { people, loading, reload } = usePeople();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState(null);
 
@@ -22,6 +24,39 @@ const PeopleList = () => {
     );
   }
 
+  // this fucntion makes all duaa to be uncompleted
+
+  const onResetAll = async () => {
+    try {
+      const { data: duaas, error: fetchError } = await supabase
+        .from("duaas")
+        .select("id");
+
+      if (fetchError) throw fetchError;
+
+      const ids = duaas.map((d) => d.id);
+
+      if (ids.length === 0) {
+        toast.info("لا توجد دعوات لإعادة تعيينها.");
+        return;
+      }
+
+      const { error: updateError } = await supabase
+        .from("duaas")
+        .update({ is_done: false })
+        .in("id", ids);
+
+      if (updateError) throw updateError;
+
+      toast.success("تم إعادة تعيين كل الدعوات ✨");
+
+      // 🌀 إعادة تحميل البيانات بدون ريفريش
+      reload();
+    } catch (error) {
+      toast.error("فشل في إعادة التعيين");
+      console.error(error);
+    }
+  };
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -74,13 +109,17 @@ const PeopleList = () => {
               />
             ))}
           </AnimatePresence>
+          <Button variant="accent" onClick={onResetAll}>
+            <FaUndo />
+            <span>ابدأ من جديد</span>
+          </Button>
+          <AddPersonModal
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+          />
         </motion.div>
       )}
-
-      <AddPersonModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-      />
+      <div className="w-full flex justify-between"></div>
 
       {personToDelete && (
         <DeletePersonModal
