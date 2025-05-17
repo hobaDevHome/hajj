@@ -12,12 +12,13 @@ import DeletePersonModal from "./DeletePersonModal";
 import PersonCard from "./PersonCard";
 import { toast } from "react-toastify";
 import { supabase } from "../../lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 const PeopleList = () => {
   const { people, loading, reload, isAdmin } = usePeople();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState(null);
-
+  const navigate = useNavigate();
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -67,7 +68,7 @@ const PeopleList = () => {
       if (error) throw error;
       toast.success("تم تسجيل الخروج");
       // بعد تسجيل الخروج ممكن تعملي redirect مثلاً للصفحة الرئيسية أو صفحة الدخول
-      window.location.href = "/login"; // عدلي حسب مسار صفحة الدخول عندك
+      navigate("/login"); // عدلي حسب مسار صفحة الدخول عندك
     } catch (error) {
       toast.error("فشل في تسجيل الخروج");
       console.error(error);
