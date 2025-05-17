@@ -6,9 +6,11 @@ import Card from "../UI/Card";
 import Button from "../UI/Button";
 
 const DuaaItem = ({ duaa, personId }) => {
-  const { toggleDuaa, removeDuaa } = usePeople();
+  const { toggleDuaa, removeDuaa, editDuaa } = usePeople();
   const [showActions, setShowActions] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(duaa.text);
 
   const handleToggle = async () => {
     try {
@@ -28,6 +30,20 @@ const DuaaItem = ({ duaa, personId }) => {
     }
   };
 
+  const handleSaveEdit = async () => {
+    if (!editedText.trim()) {
+      // ممكن تضيف تحذير هنا لو النص فاضي
+      return;
+    }
+    try {
+      await editDuaa(personId, duaa.id, editedText.trim());
+      setIsEditing(false);
+      setShowActions(false);
+    } catch (error) {
+      console.error("Error editing duaa:", error);
+    }
+  };
+
   return (
     <motion.li
       layout
@@ -39,7 +55,10 @@ const DuaaItem = ({ duaa, personId }) => {
         duaa.is_done ? "bg-gray-50 border-gray-200" : "bg-white border-gray-200"
       }`}
     >
-      <div className="flex items-start gap-3" onClick={handleToggle}>
+      <div
+        className="flex items-start gap-3"
+        onClick={!isEditing ? handleToggle : undefined}
+      >
         <button
           className={`flex-shrink-0 w-3 h-3 rounded border mt-0.5 flex items-center justify-center transition-colors ${
             duaa.is_done
@@ -51,18 +70,31 @@ const DuaaItem = ({ duaa, personId }) => {
         </button>
 
         <div className="flex-grow">
-          <p
-            className={`text-gray-800 break-words ${
-              duaa.is_done ? "line-through text-gray-500" : ""
-            }`}
-          >
-            {duaa.text}
-          </p>
+          {isEditing ? (
+            <textarea
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
+              className="w-full border rounded px-2 py-1 text-gray-900 resize-none h-24"
+              autoFocus
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <p
+              className={`text-gray-800 break-words ${
+                duaa.is_done ? "line-through text-gray-500" : ""
+              }`}
+            >
+              {duaa.text}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setShowActions(!showActions)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowActions(!showActions);
+            }}
             className="text-gray-400 hover:text-gray-600 p-1"
           >
             <FaEllipsisV />
@@ -74,17 +106,46 @@ const DuaaItem = ({ duaa, personId }) => {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="mt-2 pt-2 border-t flex justify-end"
+          className="mt-2 pt-2 border-t flex justify-end gap-2"
         >
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="flex items-center gap-1"
-          >
-            <FaTrash size={12} /> حذف
-          </Button>
+          {isEditing ? (
+            <>
+              <Button size="sm" onClick={handleSaveEdit}>
+                حفظ
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditedText(duaa.text);
+                  setShowActions(false);
+                }}
+              >
+                إلغاء
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-1"
+              >
+                ✏️ تعديل
+              </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex items-center gap-1"
+              >
+                <FaTrash size={12} /> حذف
+              </Button>
+            </>
+          )}
         </motion.div>
       )}
     </motion.li>
