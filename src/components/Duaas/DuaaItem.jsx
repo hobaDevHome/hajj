@@ -130,10 +130,17 @@ const DuaaItem = ({ duaa, personId }) => {
               <Button
                 variant="secondary"
                 size="sm"
+                onClick={() => setShowActions(false)}
+              >
+                إغلاق
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-1"
               >
-                ✏️ تعديل
+                تعديل
               </Button>
               <Button
                 variant="danger"
@@ -142,7 +149,7 @@ const DuaaItem = ({ duaa, personId }) => {
                 disabled={isDeleting}
                 className="flex items-center gap-1"
               >
-                <FaTrash size={12} /> حذف
+                حذف
               </Button>
             </>
           )}
