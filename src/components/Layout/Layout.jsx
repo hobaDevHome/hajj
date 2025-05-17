@@ -5,7 +5,7 @@ import { MdOutlineMosque } from "react-icons/md";
 import { usePeople } from "../../contexts/PeopleContext";
 import SearchBar from "../UI/SearchBar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user }) => {
   const location = useLocation();
   const { searchQuery, setSearchQuery } = usePeople();
   const isHomePage = location.pathname === "/";

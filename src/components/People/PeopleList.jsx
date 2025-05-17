@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPlus, FaUndo, FaUsers } from "react-icons/fa";
@@ -12,7 +14,7 @@ import { toast } from "react-toastify";
 import { supabase } from "../../lib/supabase";
 
 const PeopleList = () => {
-  const { people, loading, reload } = usePeople();
+  const { people, loading, reload, isAdmin } = usePeople();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState(null);
 
@@ -57,6 +59,21 @@ const PeopleList = () => {
       console.error(error);
     }
   };
+
+  // دالة تسجيل الخروج
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success("تم تسجيل الخروج");
+      // بعد تسجيل الخروج ممكن تعملي redirect مثلاً للصفحة الرئيسية أو صفحة الدخول
+      window.location.href = "/login"; // عدلي حسب مسار صفحة الدخول عندك
+    } catch (error) {
+      toast.error("فشل في تسجيل الخروج");
+      console.error(error);
+    }
+  };
+  console.log("ismodalopen", isAddModalOpen);
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -87,11 +104,7 @@ const PeopleList = () => {
           icon={<FaUsers />}
           title="لا اسماء بعد"
           description="ابدأ باضافة اسماء للقائمة"
-          action={
-            <Button onClick={() => setIsAddModalOpen(true)}>
-              <FaPlus className="mr-2" /> Add First Person
-            </Button>
-          }
+          action={""}
         />
       ) : (
         <motion.div
@@ -109,16 +122,27 @@ const PeopleList = () => {
               />
             ))}
           </AnimatePresence>
-          <Button variant="accent" onClick={onResetAll}>
-            <FaUndo />
-            <span>ابدأ من جديد</span>
-          </Button>
-          <AddPersonModal
-            isOpen={isAddModalOpen}
-            onClose={() => setIsAddModalOpen(false)}
-          />
+          {isAdmin && (
+            <Button variant="accent" onClick={onResetAll}>
+              <FaUndo />
+              <span>ابدأ من جديد</span>
+            </Button>
+          )}
         </motion.div>
       )}
+
+      <AddPersonModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
+
+      <Button
+        onClick={handleSignOut}
+        variant="danger"
+        className="flex items-center gap-2"
+      >
+        تسجيل خروج
+      </Button>
       <div className="w-full flex justify-between"></div>
 
       {personToDelete && (
