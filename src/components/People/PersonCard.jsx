@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
-import { FaCheck, FaTrash } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import Button from '../UI/Button';
+import { Link } from "react-router-dom";
+import { FaCheck, FaTrash } from "react-icons/fa";
+import { motion } from "framer-motion";
+import Button from "../UI/Button";
 
 const PersonCard = ({ person, onDelete }) => {
   const totalDuaas = person.duaas.length;
-  const completedDuaas = person.duaas.filter(duaa => duaa.is_done).length;
+  const completedDuaas = person.duaas.filter((duaa) => duaa.is_done).length;
   const isComplete = totalDuaas > 0 && completedDuaas === totalDuaas;
-  
-  const completionPercentage = totalDuaas === 0 
-    ? 0 
-    : Math.round((completedDuaas / totalDuaas) * 100);
+
+  const completionPercentage =
+    totalDuaas === 0 ? 0 : Math.round((completedDuaas / totalDuaas) * 100);
 
   const handleDelete = (e) => {
     e.preventDefault(); // Prevent navigation
@@ -19,7 +18,7 @@ const PersonCard = ({ person, onDelete }) => {
 
   return (
     <Link to={`/person/${person.id}`}>
-      <motion.div 
+      <motion.div
         className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 group"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,7 +27,7 @@ const PersonCard = ({ person, onDelete }) => {
           <div className="flex items-center gap-2">
             <h3 className="text-lg font-medium text-gray-900">{person.name}</h3>
             {isComplete && (
-              <motion.span 
+              <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 className="text-success-500"
@@ -41,21 +40,13 @@ const PersonCard = ({ person, onDelete }) => {
             <span className="text-sm text-gray-500">
               {completedDuaas}/{totalDuaas}
             </span>
-            <Button
-              variant="danger"
-              size="sm"
-              className="opacity-0 group-hover:opacity-100 transition-opacity"
-              onClick={handleDelete}
-            >
-              <FaTrash size={12} />
-            </Button>
           </div>
         </div>
-        
+
         <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
-          <motion.div 
+          <motion.div
             className={`absolute top-0 left-0 h-full ${
-              isComplete ? 'bg-success-500' : 'bg-primary-500'
+              isComplete ? "bg-success-500" : "bg-primary-500"
             }`}
             initial={{ width: 0 }}
             animate={{ width: `${completionPercentage}%` }}
