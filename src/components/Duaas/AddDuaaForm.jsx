@@ -40,7 +40,7 @@ const AddDuaaForm = ({ personId }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-4">
+      <div className="mb-2">
         <label
           htmlFor="duaa-text"
           className="block text-sm font-medium text-gray-700 mb-1"

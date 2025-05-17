@@ -11,11 +11,6 @@ const PersonCard = ({ person, onDelete }) => {
   const completionPercentage =
     totalDuaas === 0 ? 0 : Math.round((completedDuaas / totalDuaas) * 100);
 
-  const handleDelete = (e) => {
-    e.preventDefault(); // Prevent navigation
-    onDelete(person);
-  };
-
   return (
     <Link to={`/person/${person.id}`}>
       <motion.div
@@ -23,8 +18,8 @@ const PersonCard = ({ person, onDelete }) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-1">
             <h3 className="text-lg font-medium text-gray-900">{person.name}</h3>
             {isComplete && (
               <motion.span

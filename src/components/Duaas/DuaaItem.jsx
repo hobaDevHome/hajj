@@ -35,14 +35,14 @@ const DuaaItem = ({ duaa, personId }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, height: 0, marginTop: 0 }}
       transition={{ duration: 0.3 }}
-      className={`relative border rounded-lg p-3 transition-colors ${
+      className={`relative border rounded-lg p-2 transition-colors ${
         duaa.is_done ? "bg-gray-50 border-gray-200" : "bg-white border-gray-200"
       }`}
     >
       <div className="flex items-start gap-3">
         <button
           onClick={handleToggle}
-          className={`flex-shrink-0 w-5 h-5 rounded border mt-0.5 flex items-center justify-center transition-colors ${
+          className={`flex-shrink-0 w-3 h-3 rounded border mt-0.5 flex items-center justify-center transition-colors ${
             duaa.is_done
               ? "bg-success-500 border-success-500 text-white"
               : "border-gray-300 hover:border-primary-500"

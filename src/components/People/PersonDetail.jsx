@@ -74,11 +74,6 @@ const PersonDetail = () => {
               {completedDuaas} of {totalDuaas} الدعوات المكتملة
             </p>
           </div>
-
-          <Button variant="danger" onClick={() => setIsDeleteModalOpen(true)}>
-            <FaTrash className="mr-2" />
-            حذف الاسم
-          </Button>
         </div>
       </div>
 
@@ -111,7 +106,7 @@ const PersonDetail = () => {
 
         <div>
           <Card>
-            <div className="p-4 border-b">
+            <div className="p-2 border-b">
               <h2 className="text-xl font-semibold">إضافة دعاء جديد </h2>
             </div>
 
@@ -120,6 +115,10 @@ const PersonDetail = () => {
             </div>
           </Card>
         </div>
+        <Button variant="danger" onClick={() => setIsDeleteModalOpen(true)}>
+          <FaTrash className="mr-2" />
+          حذف الاسم
+        </Button>
       </div>
 
       <DeletePersonModal
