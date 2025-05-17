@@ -11,7 +11,7 @@ import {
   updateDuaa,
   deleteDuaa,
 } from "../lib/supabase";
-const ADMIN_EMAILS = ["admin1@hajj.com", "admin2@hajj.com"]; // غيريهم للإيميلات الحقيقية
+const ADMIN_EMAILS = ["admin1@hajj.com", "admin2@hajj.com", "admin@hajj.com"]; // غيريهم للإيميلات الحقيقية
 
 // @ts-ignore
 const PeopleContext = createContext();

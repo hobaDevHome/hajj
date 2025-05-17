@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Singup from "./components/Signup";
 import { PeopleProvider } from "./contexts/PeopleContext";
 
-const ADMIN_EMAILS = ["admin1@hajj.com", "admin2@hajj.com"];
+const ADMIN_EMAILS = ["admin1@hajj.com", "admin2@hajj.com", "admin@hajj.com"];
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
