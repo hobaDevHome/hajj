@@ -14,11 +14,11 @@ export const supabase = createClient(
   supabaseAnonKey || "placeholder-key"
 );
 
-export const fetchPeople = async (userId) => {
+export const fetchPeople = async (userEmail) => {
   let query = supabase.from("people").select("*, duaas(*)");
 
-  if (userId) {
-    query = query.eq("user_id", userId);
+  if (userEmail) {
+    query = query.eq("user_email", userEmail);
   }
 
   const { data, error } = await query;
@@ -27,10 +27,12 @@ export const fetchPeople = async (userId) => {
   return data;
 };
 
-export const addPerson = async (name) => {
+export const addPerson = async (name, userEmail) => {
+  console.log("userEmail before addPerson:", userEmail);
+
   const { data, error } = await supabase
     .from("people")
-    .insert([{ name }])
+    .insert([{ name, user_email: userEmail }])
     .select()
     .single();
 

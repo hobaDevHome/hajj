@@ -25,7 +25,7 @@ export default function SignUpPage() {
     if (error) {
       setError(error.message);
     } else {
-      alert("تم التسجيل بنجاح! تأكد من تفعيل الإيميل ✉️");
+      alert("تم التسجيل بنجاح!  ✉️");
       navigate("/login");
     }
   };

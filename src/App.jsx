@@ -10,13 +10,13 @@ import Login from "./components/Login";
 import Singup from "./components/Signup";
 import { PeopleProvider } from "./contexts/PeopleContext";
 
-const ADMIN_EMAILS = ["admin1@hajj.com", "admin2@hajj.com", "admin@hajj.com"];
+// const ADMIN_EMAILS = import.meta.env.VITE_ADMIN_EMAILS;
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [checking, setChecking] = useState(true);
   const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
   // @ts-ignore
   const [loadingUser, setLoadingUser] = useState(true);
 
@@ -52,9 +52,10 @@ function App() {
       } = await supabase.auth.getSession();
       // @ts-ignore
       const currentUser = session?.user ?? null;
+      // @ts-ignore
       setUser(currentUser);
       setLoadingUser(false);
-      setIsAdmin(ADMIN_EMAILS.includes(currentUser?.email));
+      // setIsAdmin(ADMIN_EMAILS.includes(currentUser?.email));
 
       // استماع لتغير حالة الدخول
       supabase.auth.onAuthStateChange((_event, session) => {

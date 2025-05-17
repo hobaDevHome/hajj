@@ -1,4 +1,4 @@
-// @ts-nocheck
+fetchPeople; // @ts-nocheck
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { createContext, useContext, useState, useEffect } from "react";
@@ -33,10 +33,9 @@ export const PeopleProvider = ({ children, user }) => {
   const loadPeople = async () => {
     try {
       setLoading(true);
-      const data = await fetchPeople(isAdmin ? null : user.id);
+      const data = await fetchPeople(isAdmin ? null : user?.email);
       setPeople(data);
     } catch (error) {
-      // toast.error("Failed to load data");
       console.error(error);
     } finally {
       setLoading(false);
@@ -45,8 +44,7 @@ export const PeopleProvider = ({ children, user }) => {
 
   const createPerson = async (name) => {
     try {
-      const newPerson = await addPerson(name);
-      // @ts-ignore
+      const newPerson = await addPerson(name, user?.email);
       setPeople((prev) => [newPerson, ...prev]);
       toast.success(`Added ${name}`);
       return newPerson;
@@ -55,7 +53,6 @@ export const PeopleProvider = ({ children, user }) => {
       throw error;
     }
   };
-
   const removePerson = async (id) => {
     try {
       await deletePerson(id);
