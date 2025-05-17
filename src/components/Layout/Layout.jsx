@@ -17,26 +17,9 @@ const Layout = ({ children }) => {
           <img
             src="/images/kaaba.jpg"
             alt="الكعبة"
-            className="w-full max-h-64 object-cover rounded-xl mb-6"
+            className="w-full max-h-64 object-cover rounded-xl "
           />
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <MdOutlineMosque className="text-2xl" />
-              <h1 className="text-xl md:text-2xl font-display">سجل الدعوات</h1>
-            </Link>
-
-            <div className="flex items-center gap-4">
-              {!isHomePage && (
-                <Link
-                  to="/"
-                  className="flex items-center gap-1 text-white hover:text-primary-200 transition-colors"
-                >
-                  <FaHome />
-                  <span className="hidden md:inline">Home</span>
-                </Link>
-              )}
-            </div>
-          </div>
+          <div className="flex items-center justify-between"></div>
 
           <motion.div
             initial={{ opacity: 0, y: -10 }}

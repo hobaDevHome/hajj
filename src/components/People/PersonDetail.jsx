@@ -80,11 +80,11 @@ const PersonDetail = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card className="overflow-visible">
-            <div className="p-4 border-b">
+            <div className="p-1 border-b">
               <h2 className="text-xl font-semibold">قائمة الدعوات</h2>
             </div>
 
-            <div className="p-4">
+            <div className="p-1">
               {person.duaas.length === 0 ? (
                 <EmptyState title=" " description="اضف ادعية للقائمة" />
               ) : (
@@ -110,7 +110,7 @@ const PersonDetail = () => {
               <h2 className="text-xl font-semibold">إضافة دعاء جديد </h2>
             </div>
 
-            <div className="p-4">
+            <div className="p-1">
               <AddDuaaForm personId={person.id} />
             </div>
           </Card>
